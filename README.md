@@ -1,1 +1,1 @@
-# dog-img-gen
+This is a simple one-page application made with **HTML + Tailwind + JS** that displays random dog images when a button is clicked. For the API, I used https://dog.ceo/dog-api/. Contributions to this are welcome!
