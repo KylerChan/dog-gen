@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Image Gen</title>
+    <link rel="shortcut icon" href="/random-dog-img/bone-logo.svg" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white min-h-screen flex flex-col items-center justify-center px-4">
+    <div class="max-w-md w-full space-y-8 p-2 rounded-lg">
+        <h1 class="text-3xl font-light text-gray-900 text-center tracking-wide">Random Dog Images</h1>
+        
+        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+                <img id="dogImg" src="https://via.placeholder.com/300?text=Click+the+button" alt="Random Dog Image" class="w-full h-full object-contain rounded-2xl"/>
+            <p class="text-red-500 text-center mb-4" id="errorMessage"></p>
+            
+            <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200" id="btn">
+                Generate
+            </button>
+        </div>
+    </div>
+    <script src="../script.js"></script>
+</body>
+</html>
