@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dog Image Gen</title>
     <link rel="shortcut icon" href="/random-dog-img/bone-logo.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white min-h-screen flex flex-col items-center justify-center px-4">
@@ -15,13 +16,17 @@
                 <img id="dogImg" src="https://via.placeholder.com/300?text=Click+the+button" alt="Random Dog Image" class="w-full h-full object-contain rounded-2xl"/>
             <p class="text-red-500 text-center mb-4" id="errorMessage"></p>
             
-            <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200" id="btn">
-                Generate
-            </button>
+            <div class="flex gap-3 mt-4">
+                <button class="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200" id="btn">
+                    Generate
+                </button>
+                <button id="download" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md">
+                    <i class="fa-solid fa-download"></i>
+                </button>
+            </div>
         </div>
     </div>
 
-    <!-- How to Use Section -->
     <div class="max-w-2xl w-full mt-12 mb-8 px-4">
         <div class="bg-blue-50 rounded-2xl p-8 border border-blue-100">
             <h2 class="text-2xl font-semibold text-gray-900 mb-6 text-center">How to Use</h2>
