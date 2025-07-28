@@ -1,7 +1,8 @@
 const btn = document.querySelector("#btn")
 const img = document.querySelector("#dogImg")
 const errorMSG = document.querySelector("#errorMessage")
-const download = document.querySelector("#download")
+const downloadBtn = document.getElementById('download');
+const downloadMenu = document.getElementById('menu-download');
 
 let currentImageUrl = ''
 
@@ -16,11 +17,11 @@ async function fetchDogImage() {
         img.src = currentImageUrl
         errorMSG.textContent = "" 
         
-        download.disabled = false
+        downloadBtn.disabled = false
         
     } catch (error) {
         errorMSG.textContent = error.message
-        download.disabled = true
+        downloadBtn.disabled = true
     }
 }
 
@@ -30,32 +31,40 @@ btn.addEventListener("click", function() {
     fetchDogImage()
 })
 
-download.addEventListener("click", async function() {
-    if (!currentImageUrl) {
-        alert('No image to download!');
-        return;
+downloadBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    downloadMenu.classList.toggle('hidden');
+});
+
+document.addEventListener('click', (e) => {
+    if (!downloadBtn.contains(e.target) && !downloadMenu.contains(e.target)) {
+        downloadMenu.classList.add('hidden');
     }
-    
-    try {
-        const response = await fetch(currentImageUrl);
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);   
-        const urlParts = currentImageUrl.split('/');
-        const breed = urlParts[urlParts.length - 2] || 'dog';
-        const timestamp = new Date().getTime();
-        const filename = `${breed}-${timestamp}.jpg`;
-        
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        
-        URL.revokeObjectURL(blobUrl);
-        
-    } catch (error) {
-        console.error('Download failed:', error);
-        alert('Failed to download image. Please try again.');
-    }
-})
+});
+
+document.querySelectorAll('#menu-download button[data-size]').forEach(button => {
+    button.addEventListener('click', async () => {
+        try {
+            const img = document.getElementById('dogImg');
+            const response = await fetch(img.src);
+            const blob = await response.blob();
+            
+            const fileType = button.textContent.trim().split(' ').pop().toLowerCase();
+            const fileName = `dog-image.${fileType}`;
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = window.URL.createObjectURL(blob);
+            downloadLink.download = fileName;
+            
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            
+            window.URL.revokeObjectURL(downloadLink.href);
+            downloadMenu.classList.add('hidden');
+        } catch (error) {
+            console.error('Download failed:', error);
+            alert('Failed to download image. Please try again.');
+        }
+    });
+});
