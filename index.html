@@ -12,10 +12,8 @@
     <div class="max-w-md w-full space-y-8 p-2 rounded-lg">
         <h1 class="text-3xl font-light text-gray-900 text-center tracking-wide">Random Dog Images</h1>
         
-        <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100">
+        <div class="bg-gray-50 rounded-2xl p-8 border-[3px] border-gray-100">
                 <img id="dogImg" src="https://via.placeholder.com/300?text=Click+the+button" alt="Random Dog Image" class="w-full h-full object-contain rounded-2xl"/>
-            <p class="text-red-500 text-center mb-4" id="errorMessage"></p>
-            
             <div class="flex gap-3 mt-4">
                 <button class="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200" id="btn">
                     Generate
@@ -46,6 +44,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="hidden bg-red-400 px-5 py-2 rounded-[16px] mt-[30px] border border-red-500 text-white flex items-center justify-center gap-2">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <p class="mb-1" id="error-msge">Error text goes here</p>
     </div>
 
     <div class="max-w-2xl w-full mt-12 mb-8 px-4">
