@@ -1,8 +1,8 @@
 const btn = document.querySelector("#btn")
 const img = document.querySelector("#dogImg")
-const errorMSG = document.querySelector("#errorMessage")
 const downloadBtn = document.getElementById('download');
 const downloadMenu = document.getElementById('menu-download');
+const errorMSG = document.getElementById("error-msg2")  
 
 let currentImageUrl = ''
 
@@ -63,8 +63,14 @@ document.querySelectorAll('#menu-download button[data-size]').forEach(button => 
             window.URL.revokeObjectURL(downloadLink.href);
             downloadMenu.classList.add('hidden');
         } catch (error) {
-            console.error('Download failed:', error);
-            alert('Failed to download image. Please try again.');
+            errorMSG.parentElement.classList.remove('hidden');
+            errorMSG.textContent = "Download failed, please try again";
         }
     });
 });
+
+img.onerror = () => {
+    errorMSG.parentElement.classList.remove('hidden');
+    errorMSG.textContent = "Failed to load image";
+    downloadBtn.disabled = true;
+};
