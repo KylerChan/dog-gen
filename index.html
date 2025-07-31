@@ -1,116 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dog Image Gen</title>
-    <link rel="shortcut icon" href="/random-dog-img/bone-logo.svg" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dog Image Gen</title>
+  <link rel="shortcut icon" href="/random-dog-img/bone-logo.svg" type="image/x-icon"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white min-h-screen flex flex-col items-center justify-center px-4">
-    <div class="max-w-md w-full space-y-8 p-2 rounded-lg">
-        <h1 class="text-3xl font-light text-gray-900 text-center tracking-wide">Random Dog Images</h1>
-        
-        <div class="bg-gray-50 rounded-2xl p-8 border-[3px] border-gray-100">
-                <img id="dogImg" src="https://via.placeholder.com/300?text=Click+the+button" alt="Random Dog Image" class="w-full h-full object-contain rounded-2xl"/>
-            <div class="flex gap-3 mt-4">
-                <button class="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200" id="btn">
-                    Generate
-                </button>
+  <div class="max-w-md w-full space-y-8 p-2 rounded-lg">
+    <h1 class="text-3xl font-light text-gray-900 text-center tracking-wide">Random Dog Images</h1>
 
-                <div class="relative">
-                    <button id="download" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md">
-                        <i class="fa-solid fa-download p-2" id="loader-hover"></i>
-                    </button>
-
-                    <div id="menu-download" class="hidden absolute left-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-10">
-                        <div class="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">Download Options</div>
-                        <div class="py-1">
-                            <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" data-size="small">
-                                <i class="fa-solid fa-image text-gray-400"></i>
-                                Download as PNG
-                            </button>
-                            <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" data-size="medium">
-                                <i class="fa-solid fa-image text-gray-400"></i>
-                                Download as JPG
-                            </button>
-                            <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" data-size="large">
-                                <i class="fa-solid fa-image text-gray-400"></i>
-                                Download as JPEG
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="bg-gray-50 rounded-2xl p-8 border-[3px] border-gray-100 relative">
+      <div class="w-full aspect-square bg-gray-100 flex items-center justify-center rounded-2xl overflow-hidden">
+        <img id="dogImg" src="https://via.placeholder.com/300?text=Loading" alt="Random dog" class="w-full h-full object-contain rounded-2xl" aria-live="polite" />
+        <div id="spinner" class="absolute inset-0 flex items-center justify-center bg-white/70 hidden" aria-hidden="true">
+          <div class="animate-spin border-4 border-gray-300 border-t-gray-900 rounded-full w-12 h-12"></div>
         </div>
-    </div>
+      </div>
 
-    <div class="hidden bg-red-400 px-5 py-2 rounded-[16px] mt-[30px] border border-red-500 text-white flex items-center justify-center gap-2">
+      <div class="flex gap-3 mt-4">
+        <button id="btn" class="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-xl transition-colors duration-200 disabled:opacity-50" aria-label="Generate new dog image">
+          <span id="btn-text">Generate</span>
+        </button>
+
+        <div class="relative">
+          <button id="download" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md disabled:opacity-50" aria-label="Download image" disabled>
+            <i class="fa-solid fa-download"></i>
+          </button>
+
+          <div id="menu-download" class="hidden absolute left-0 mt-2 w-48 bg-white border border-gray-100 rounded-xl shadow-lg py-2 z-10" role="menu" aria-label="Download options">
+            <div class="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">Download Options</div>
+            <div class="py-1">
+              <button data-type="png" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" role="menuitem">
+                <i class="fa-solid fa-image text-gray-400"></i> PNG
+              </button>
+              <button data-type="jpg" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" role="menuitem">
+                <i class="fa-solid fa-image text-gray-400"></i> JPG
+              </button>
+              <button data-type="jpeg" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2" role="menuitem">
+                <i class="fa-solid fa-image text-gray-400"></i> JPEG
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="error-container" class="hidden bg-red-400 px-5 py-2 rounded-[16px] mt-4 border border-red-500 text-white flex items-center justify-center gap-2" role="alert">
         <i class="fa-solid fa-circle-exclamation"></i>
-        <p class="mb-1" id="error-msge">Error text goes here</p>
+        <p class="mb-1" id="error-msg">Error text goes here</p>
+        <button id="retry" class="ml-4 bg-white text-red-600 px-3 py-1 rounded">Retry</button>
+      </div>
     </div>
+  </div>
 
-    <div class="max-w-2xl w-full mt-12 mb-8 px-4">
-        <div class="bg-blue-50 rounded-2xl p-8 border border-blue-100">
-            <h2 class="text-2xl font-semibold text-gray-900 mb-6 text-center">How to Use</h2>
-            
-            <div class="space-y-6">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">
-                        1
-                    </div>
-                    <div>
-                        <h3 class="font-medium text-gray-900 mb-1">Automatic Load</h3>
-                        <p class="text-gray-600 text-sm">When you first visit the page, a random dog image will automatically load for you to enjoy!</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">
-                        2
-                    </div>
-                    <div>
-                        <h3 class="font-medium text-gray-900 mb-1">Generate New Images</h3>
-                        <p class="text-gray-600 text-sm">Click the "Generate" button to fetch a new random dog image from our collection of adorable pups.</p>
-                    </div>
-                </div> 
-                
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">
-                        3
-                    </div>
-                    <div>
-                        <h3 class="font-medium text-gray-900 mb-1">Enjoy Unlimited Dogs</h3>
-                        <p class="text-gray-600 text-sm">Keep clicking to see more cute dogs! Each click brings you a completely random dog image from different breeds.</p>
-                    </div>
-                </div>
-                
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">
-                        💡
-                    </div>
-                    <div>
-                        <h3 class="font-medium text-gray-900 mb-1">Pro Tip</h3>
-                        <p class="text-gray-600 text-sm">If an image fails to load, an error message will appear. Simply try clicking "Generate" again!</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-8 p-4 bg-white rounded-xl border border-blue-200">
-                <h4 class="font-medium text-gray-900 mb-2">Features:</h4>
-                <ul class="text-sm text-gray-600 space-y-1">
-                    <li>• Powered by Dog CEO API</li>
-                    <li>• High-quality dog images</li>
-                    <li>• Multiple dog breeds</li>
-                    <li>• Fast loading times</li>
-                    <li>• Mobile-friendly design</li>
-                    <li>• Error handling included</li>
-                </ul>
-            </div>
+  <div class="max-w-2xl w-full mt-12 mb-8 px-4">
+    <div class="bg-blue-50 rounded-2xl p-8 border border-blue-100">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6 text-center">How to Use</h2>
+
+      <div class="space-y-6">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">1</div>
+          <div>
+            <h3 class="font-medium text-gray-900 mb-1">Automatic Load</h3>
+            <p class="text-gray-600 text-sm">Page loads a random dog image immediately.</p>
+          </div>
         </div>
-    </div>
 
-    <script src="script.js"></script>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">2</div>
+          <div>
+            <h3 class="font-medium text-gray-900 mb-1">Generate New Images</h3>
+            <p class="text-gray-600 text-sm">Click Generate to fetch another random dog.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">3</div>
+          <div>
+            <h3 class="font-medium text-gray-900 mb-1">Enjoy Unlimited Dogs</h3>
+            <p class="text-gray-600 text-sm">Repeat to see more breeds. Each is random.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-semibold text-sm">💡</div>
+          <div>
+            <h3 class="font-medium text-gray-900 mb-1">Pro Tip</h3>
+            <p class="text-gray-600 text-sm">If loading fails, use Retry. Wait a second before spamming Generate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 p-4 bg-white rounded-xl border border-blue-200">
+        <h4 class="font-medium text-gray-900 mb-2">Features:</h4>
+        <ul class="text-sm text-gray-600 space-y-1">
+          <li>• Powered by Dog CEO API</li>
+          <li>• High-quality dog images</li>
+          <li>• Multiple dog breeds</li>
+          <li>• Fast loading times</li>
+          <li>• Mobile-friendly design</li>
+          <li>• Error handling included</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" type="module"></script>
 </body>
 </html>
