@@ -90,13 +90,16 @@ downloadMenu.querySelectorAll('button[data-type]').forEach(button => {
       return;
     }
     try {
-      const type = button.getAttribute("data-type");
+      const type = button.getAttribute("data-type"); // "png", "jpg", or "jpeg"
       const response = await fetch(currentImageUrl, { mode: "cors" });
       if (!response.ok) throw new Error("Failed to fetch image for download");
       const blob = await response.blob();
 
-      const ext = type === "jpeg" ? "jpg" : type;
-      const mime = blob.type || `image/${ext}`;
+      const ext = type;
+      let mime;
+      if (ext === "png") mime = "image/png";
+      else if (ext === "jpg" || ext === "jpeg") mime = "image/jpeg";
+      else mime = blob.type || `image/${ext}`;
       const fileName = `dog-image.${ext}`;
 
       const downloadLink = document.createElement('a');
@@ -118,4 +121,5 @@ img.onerror = () => {
   downloadBtn.disabled = true;
 };
 
+// initial load
 fetchDogImage();
